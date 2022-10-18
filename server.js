@@ -15,9 +15,9 @@ app.get("/:ticker", async (req, res) => {
     if (!ticker || !key) {
         return res.send({ message: "please provide api key and ticker" });
     }
-    // const {data} = await axios.get('https://finance.yahoo.com/quote/MRNA/key-statistics?p=MRNA');
-    // const $ = cheerio.load(data);
-    // return res.send({data: $('section[data-test="qsp-statistics"] > div:nth-child(2) tr').get().map(val => $(val).text() )});
+    const {data} = await axios.get('https://finance.yahoo.com/quote/MRNA/key-statistics?p=MRNA');
+    const $ = cheerio.load(data);
+    return res.send( $('section[data-test="qsp-statistics"]').html() );
 
     try {
         const stockInfo = await Promise.all(
